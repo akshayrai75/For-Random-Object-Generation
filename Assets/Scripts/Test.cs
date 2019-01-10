@@ -22,9 +22,14 @@ public class Test : MonoBehaviour
         points = PoissonDiscSampling.GeneratePoints(radius, regionSize, rejectionSamples);
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(regionSize / 2, regionSize);
+    }
+
+    void Start()
+    {
+        
         if (points != null)
         {
             foreach (Vector2 point in points)
