@@ -5,6 +5,9 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
 
+
+//initializing game object to show in display
+
     public GameObject objectToInstantiate;
 
     public float radius = 1;
@@ -28,7 +31,7 @@ public class Test : MonoBehaviour
             {
                 //Gizmos.DrawSphere(point, displayRadius);
                 //Intatiate trees here
-                Instantiate(objectToInstantiate, point, Quaternion.identity);
+                Instantiate(objectToInstantiate, point, Quaternion.identity);		//showing the points on screen 
 
             }
         }

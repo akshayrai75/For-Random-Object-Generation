@@ -7,20 +7,20 @@ public static class PoissonDiscSampling
 
     public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection = 30)
     {
-        float cellSize = radius / Mathf.Sqrt(2);
-
-        int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
+        float cellSize = radius / Mathf.Sqrt(2);	//size of object on the point
+ 
+        int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];	//2D array of location of points
         List<Vector2> points = new List<Vector2>();
         List<Vector2> spawnPoints = new List<Vector2>();
 
-        spawnPoints.Add(sampleRegionSize / 2);
+        spawnPoints.Add(sampleRegionSize / 2);	//declaring region size (Area)
         while (spawnPoints.Count > 0)
         {
-            int spawnIndex = Random.Range(0, spawnPoints.Count);
-            Vector2 spawnCentre = spawnPoints[spawnIndex];
-            bool candidateAccepted = false;
+            int spawnIndex = Random.Range(0, spawnPoints.Count);	//selecting a random point in spawnPoints range
+            Vector2 spawnCentre = spawnPoints[spawnIndex];		// spawn point centre choosing
+            bool candidateAccepted = false;		//for avoiding overlap of the points
 
-            for (int i = 0; i < numSamplesBeforeRejection; i++)
+            for (int i = 0; i < numSamplesBeforeRejection; i++)		//checking overlap conditions
             {
                 float angle = Random.value * Mathf.PI * 2;
                 Vector2 dir = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
@@ -34,7 +34,7 @@ public static class PoissonDiscSampling
                     break;
                 }
             }
-            if (!candidateAccepted)
+            if (!candidateAccepted)		//removing overlapping points
             {
                 spawnPoints.RemoveAt(spawnIndex);
             }
@@ -44,6 +44,8 @@ public static class PoissonDiscSampling
         return points;
     }
 
+	
+	//for pacing the points and checking its validity inside the defined region size
     static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float cellSize, float radius, List<Vector2> points, int[,] grid)
     {
         if (candidate.x >= 0 && candidate.x < sampleRegionSize.x && candidate.y >= 0 && candidate.y < sampleRegionSize.y)
